@@ -168,7 +168,7 @@
       <!-- قسم الأخبار -->
       <div id="news" class="news_section" style="padding: 70px 0;">
          <div class="container">
-           <div class="row">
+           <div class="row" dir="ltr">
              <div class="col-md-10 offset-md-1">
                <div class="titlepage text_align_center">
                  <h2>أخبار الفريق</h2>
@@ -176,22 +176,19 @@
                </div>
              </div>
            </div>
+       
            <div class="row text-end">
        
              <!-- خبر 1 -->
              <div class="col-md-4 mb-4">
                <div class="card shadow" style="border: none;">
-                 <div style="width: 100%; height: 250px; overflow: hidden;">
-                   <iframe 
-                     src="https://drive.google.com/file/d/1a6U9YeI2_QTzN_r_edR8eQSPTJ7qGW6v/preview" 
-                     style="width: 100%; height: 100%; border: none; object-fit: cover;" 
-                     allowfullscreen>
-                   </iframe>
+                 <div class="zoom-container">
+                   <img src="images/news/new1.jpeg" alt="تكريم خالد">
                  </div>
                  <div class="card-body">
                    <h5 class="card-title">تكريم الأخ خالد</h5>
                    <p class="card-text">تم تكريم الأخ خالد الحامد لجهوده المبذولة تجاه الفريق ولم الشباب ومساندته الدائمة.</p>
-                   <a href="https://drive.google.com/file/d/1a6U9YeI2_QTzN_r_edR8eQSPTJ7qGW6v/view" target="_blank" class="btn btn-primary">عرض الصورة</a>
+                   <a href="images/news/new1.jpeg" target="_blank" class="btn btn-primary">عرض الصورة</a>
                  </div>
                </div>
              </div>
@@ -199,17 +196,13 @@
              <!-- خبر 2 -->
              <div class="col-md-4 mb-4">
                <div class="card shadow" style="border: none;">
-                 <div style="width: 100%; height: 250px; overflow: hidden;">
-                   <iframe 
-                     src="https://drive.google.com/file/d/1a62e1wuRZikZaTg_r-eF6MkauH87ISgt/preview" 
-                     style="width: 100%; height: 100%; border: none; object-fit: cover;" 
-                     allowfullscreen>
-                   </iframe>
+                 <div class="zoom-container">
+                   <img src="images/news/new2.jpeg" alt="أفضل لاعب في التمرين">
                  </div>
                  <div class="card-body">
                    <h5 class="card-title">أفضل لاعب في التمرين</h5>
                    <p class="card-text">محمد عبد الرحمن العطاس حصل على لقب أفضل لاعب في تمرين يوم الثلاثاء 8/7.</p>
-                   <a href="https://drive.google.com/file/d/1a62e1wuRZikZaTg_r-eF6MkauH87ISgt/view" target="_blank" class="btn btn-primary">عرض الصورة</a>
+                   <a href="images/news/new2.jpeg" target="_blank" class="btn btn-primary">عرض الصورة</a>
                  </div>
                </div>
              </div>
@@ -217,17 +210,13 @@
              <!-- خبر 3 -->
              <div class="col-md-4 mb-4">
                <div class="card shadow" style="border: none;">
-                 <div style="width: 100%; height: 250px; overflow: hidden;">
-                   <iframe 
-                     src="https://drive.google.com/file/d/1aG9MH_HsRU8oqpX9Ve5cWb5-G0CWLf4-/preview" 
-                     style="width: 100%; height: 100%; border: none; object-fit: cover;" 
-                     allowfullscreen>
-                   </iframe>
+                 <div class="zoom-container">
+                   <img src="images/news/new3.jpeg" alt="أفضل لاعب شهر 7">
                  </div>
                  <div class="card-body">
                    <h5 class="card-title">أفضل لاعب في شهر 7</h5>
                    <p class="card-text">جعفر المحضار تم اختياره كأفضل لاعب في شهر يوليو نظير مستواه المتميز في المباريات والتدريبات.</p>
-                   <a href="https://drive.google.com/file/d/1aG9MH_HsRU8oqpX9Ve5cWb5-G0CWLf4-/view" target="_blank" class="btn btn-primary">عرض الصورة</a>
+                   <a href="images/news/new3.jpeg" target="_blank" class="btn btn-primary">عرض الصورة</a>
                  </div>
                </div>
              </div>
@@ -451,4 +440,48 @@
       <script src="js/jquery-3.0.0.min.js"></script>
       <script src="js/custom.js"></script>
    </body>
+   <script>
+        document.querySelectorAll('.zoom-container').forEach(container => {
+    let scale = 1;
+    let isDragging = false;
+    let startX, startY, originX = 0, originY = 0;
+    const img = container.querySelector('img');
+
+    container.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      scale += e.deltaY * -0.001;
+      scale = Math.min(Math.max(1, scale), 3); // حد التكبير من 1x إلى 3x
+      img.style.transform = `scale(${scale}) translate(${originX}px, ${originY}px)`;
+    });
+
+    container.addEventListener('mousedown', function (e) {
+      if (scale === 1) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      container.classList.add("zooming");
+    });
+
+    container.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      originX += dx / scale;
+      originY += dy / scale;
+      img.style.transform = `scale(${scale}) translate(${originX}px, ${originY}px)`;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    container.addEventListener('mouseup', function () {
+      isDragging = false;
+      container.classList.remove("zooming");
+    });
+
+    container.addEventListener('mouseleave', function () {
+      isDragging = false;
+      container.classList.remove("zooming");
+    });
+  });
+   </script>
 </html>

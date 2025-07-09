@@ -49,7 +49,28 @@ basic
      border-top-left-radius: 0.25rem;
      border-top-right-radius: 0.25rem;
    }
-   
+   .zoom-container {
+     width: 100%;
+     height: 250px;
+     overflow: hidden;
+     position: relative;
+     border-radius: 8px;
+     cursor: grab;
+   }
+ 
+   .zoom-container img {
+     width: 100%;
+     height: 100%;
+     /* object-fit: cover; */
+     transition: transform 0.2s ease;
+     user-select: none;
+     pointer-events: none;
+     display: block;
+   }
+ 
+   .zoom-container.zooming img {
+     pointer-events: auto;
+   }
 
 body {
      color: #666666;

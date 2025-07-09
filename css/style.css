@@ -41,6 +41,14 @@ basic
      text-align: right; /* لمحاذاة النصوص إلى اليمين */
    }
    
+/* لتنسيق صور الأخبار بدون فراغات سوداء */
+.card-img-top {
+     width: 100%;
+     height: 250px; /* يمكنك تغيير الارتفاع إذا أردت */
+     object-fit: cover;
+     border-top-left-radius: 0.25rem;
+     border-top-right-radius: 0.25rem;
+   }
    
 
 body {
